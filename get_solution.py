@@ -238,7 +238,7 @@ print(f"Average steps per day: {average_steps}")
 
     if qid == "ga2q9":
         # needs a running api
-        return "http://127.0.0.1:8000/api"
+        return "https://fastapi-ex.vercel.app/api"
 
     if qid == "ga2q10":
         # needs a running ngrok server
@@ -277,76 +277,15 @@ print(f"Average steps per day: {average_steps}")
         return 298
 
     if qid == "ga3q3":
-        return """{
-    "model": "gpt-4o-mini",
-    "messages": [
-      {
-        "role": "system",
-        "content": "Respond in JSON"
-      },
-      {
-        "role": "user",
-        "content": "Generate 10 random addresses in the US"
-      }
-    ],
-    "response_format": {
-      "type": "json_schema",
-      "json_schema": {
-        "name": "address_response",
-        "strict": "true",
-        "schema": {
-            "type": "object",
-            "properties": {
-                "addresses": {
-                    "type": "array",
-                    "items": {
-                    "type": "object",
-                    "properties": {
-                        "county": { "type": "string" },
-                        "street": { "type": "string" },
-                        "city": { "type": "string" }
-                    },
-                    "required": ["county", "street", "city"],
-                    "additionalProperties": false
-                    }
-                }
-            },
-            "required": ["addresses"],
-            "additionalProperties": false
-        }
-      }
-    }
-  }"""
+        return """{"model": "gpt-4o-mini","messages": [{"role": "system","content": "Respond in JSON"},{"role": "user","content": "Generate 10 random addresses in the US"}],"response_format": {"type": "json_schema","json_schema": {"name": "address_response","strict": "true","schema": {"type": "object","properties": {"addresses": {"type": "array","items": {"type": "object","properties": {"county": { "type": "string" },"street": { "type": "string" },"city": { "type": "string" }},"required": ["county", "street", "city"],"additionalProperties": false}}},"required": ["addresses"],"additionalProperties": false}}}}"""
 
     if qid == "ga3q4":
         result = ga3.q4(file)
-        json_format = """{
-  "model": "gpt-4o-mini",
-  "messages": [
-    {
-      "role": "user",
-      "content": [
-        {"type": "text", "text": "Extract text from this image"},
-        {
-          "type": "image_url",
-          "image_url": { "url": "<base64_url>" }
-        }
-      ]
-    }
-  ]
-}
-"""
+        json_format = """{"model": "gpt-4o-mini","messages": [{"role": "user","content": [{"type": "text", "text": "Extract text from this image"},{"type": "image_url","image_url": { "url": "<base64_url>" }}]}]}"""
         return json_format.replace("<base64_url>", result)
 
     if qid == "ga3q5":
-        return """{
-  "model": "text-embedding-3-small",
-  "input": [
-    "Dear user, please verify your transaction code 10157 sent to 21f1004913@ds.study.iitm.ac.in",
-    "Dear user, please verify your transaction code 26356 sent to 21f1004913@ds.study.iitm.ac.in"
-  ]
-}
-"""
+        return """{"model": "text-embedding-3-small","input": ["Dear user, please verify your transaction code 10157 sent to 21f1004913@ds.study.iitm.ac.in","Dear user, please verify your transaction code 26356 sent to 21f1004913@ds.study.iitm.ac.in"]}"""
 
     if qid == "ga3q6":
         code = """import numpy as np
@@ -381,10 +320,10 @@ def most_similar(embeddings):
         return code
 
     if qid == "ga3q7":
-        return "http://127.0.0.1:8000/similarity"
+        return "https://ga3q7.vercel.app/similarity"
 
     if qid == "ga3q8":
-        return "http://127.0.0.1:8080/execute"
+        return "https://ga3q8.vercel.app/execute"
 
     if qid == "ga3q9":
         return "Say 'Yes'"
@@ -400,161 +339,10 @@ def most_similar(embeddings):
             return 140
 
     if qid == "ga4q2":
-        return """[
-    {
-        "id": "tt13918776",
-        "title": "1. The Night Agent",
-        "year": "2023\u2013 ",
-        "rating": "7.5"
-    },
-    {
-        "id": "tt5040012",
-        "title": "2. Nosferatu",
-        "year": "2024",
-        "rating": "7.4"
-    },
-    {
-        "id": "tt27444205",
-        "title": "3. Paradise",
-        "year": "2025\u2013 ",
-        "rating": "7.9"
-    },
-    {
-        "id": "tt8999762",
-        "title": "4. The Brutalist",
-        "year": "2024",
-        "rating": "8.0"
-    },
-    {
-        "id": "tt27657135",
-        "title": "5. Saturday Night",
-        "year": "2024",
-        "rating": "7.0"
-    },
-    {
-        "id": "tt17526714",
-        "title": "6. The Substance",
-        "year": "2024",
-        "rating": "7.3"
-    },
-    {
-        "id": "tt10919420",
-        "title": "7. Squid Game",
-        "year": "2021\u20132025",
-        "rating": "8.0"
-    },
-    {
-        "id": "tt26584495",
-        "title": "8. Companion",
-        "year": "2025",
-        "rating": "7.4"
-    },
-    {
-        "id": "tt13406094",
-        "title": "9. The White Lotus",
-        "year": "2021\u2013 ",
-        "rating": "8.0"
-    },
-    {
-        "id": "tt9218128",
-        "title": "10. Il gladiatore II",
-        "year": "2024",
-        "rating": "6.6"
-    },
-    {
-        "id": "tt30057084",
-        "title": "11. Babygirl",
-        "year": "2024",
-        "rating": "6.1"
-    },
-    {
-        "id": "tt26748649",
-        "title": "12. High Potential",
-        "year": "2024\u2013 ",
-        "rating": "7.6"
-    },
-    {
-        "id": "tt28607951",
-        "title": "13. Anora",
-        "year": "2024",
-        "rating": "7.8"
-    },
-    {
-        "id": "tt14858658",
-        "title": "14. Blink Twice",
-        "year": "2024",
-        "rating": "6.5"
-    },
-    {
-        "id": "tt16030542",
-        "title": "15. The Recruit",
-        "year": "2022\u2013 ",
-        "rating": "7.4"
-    },
-    {
-        "id": "tt7587890",
-        "title": "16. The Rookie",
-        "year": "2018\u2013 ",
-        "rating": "8.0"
-    },
-    {
-        "id": "tt11563598",
-        "title": "17. A Complete Unknown",
-        "year": "2024",
-        "rating": "7.7"
-    },
-    {
-        "id": "tt18259086",
-        "title": "18. Sonic 3: Il film",
-        "year": "2024",
-        "rating": "7.0"
-    },
-    {
-        "id": "tt20215234",
-        "title": "19. Conclave",
-        "year": "2024",
-        "rating": "7.4"
-    },
-    {
-        "id": "tt21823606",
-        "title": "20. A Real Pain",
-        "year": "2024",
-        "rating": "7.1"
-    },
-    {
-        "id": "tt16027074",
-        "title": "21. Your Friendly Neighborhood Spider-Man",
-        "year": "2025\u2013 ",
-        "rating": "6.3"
-    },
-    {
-        "id": "tt3288518",
-        "title": "22. Younger",
-        "year": "2015\u20132021",
-        "rating": "7.8"
-    },
-    {
-        "id": "tt1262426",
-        "title": "23. Wicked",
-        "year": "2024",
-        "rating": "7.6"
-    },
-    {
-        "id": "tt31186958",
-        "title": "24. Prime Target",
-        "year": "2025\u2013 ",
-        "rating": "6.4"
-    },
-    {
-        "id": "tt8008948",
-        "title": "25. Nella tana dei lupi 2 - Pantera",
-        "year": "2025",
-        "rating": "6.4"
-    }
-]"""
+        return """[{"id": "tt13918776","title": "1. The Night Agent","year": "2023\u2013 ","rating": "7.5"},{"id": "tt5040012","title": "2. Nosferatu","year": "2024","rating": "7.4"},{"id": "tt27444205","title": "3. Paradise","year": "2025\u2013 ","rating": "7.9"},{"id": "tt8999762","title": "4. The Brutalist","year": "2024","rating": "8.0"},{"id": "tt27657135","title": "5. Saturday Night","year": "2024","rating": "7.0"},{"id": "tt17526714","title": "6. The Substance","year": "2024","rating": "7.3"},{"id": "tt10919420","title": "7. Squid Game","year": "2021\u20132025","rating": "8.0"},{"id": "tt26584495","title": "8. Companion","year": "2025","rating": "7.4"},{"id": "tt13406094","title": "9. The White Lotus","year": "2021\u2013 ","rating": "8.0"},{"id": "tt9218128","title": "10. Il gladiatore II","year": "2024","rating": "6.6"},{"id": "tt30057084","title": "11. Babygirl","year": "2024","rating": "6.1"},{"id": "tt26748649","title": "12. High Potential","year": "2024\u2013 ","rating": "7.6"},{"id": "tt28607951","title": "13. Anora","year": "2024","rating": "7.8"},{"id": "tt14858658","title": "14. Blink Twice","year": "2024","rating": "6.5"},{"id": "tt16030542","title": "15. The Recruit","year": "2022\u2013 ","rating": "7.4"},{"id": "tt7587890","title": "16. The Rookie","year": "2018\u2013 ","rating": "8.0"},{"id": "tt11563598","title": "17. A Complete Unknown","year": "2024","rating": "7.7"},{"id": "tt18259086","title": "18. Sonic 3: Il film","year": "2024","rating": "7.0"},{"id": "tt20215234","title": "19. Conclave","year": "2024","rating": "7.4"},{"id": "tt21823606","title": "20. A Real Pain","year": "2024","rating": "7.1"},{"id": "tt16027074","title": "21. Your Friendly Neighborhood Spider-Man","year": "2025\u2013 ","rating": "6.3"},{"id": "tt3288518","title": "22. Younger","year": "2015\u20132021","rating": "7.8"},{"id": "tt1262426","title": "23. Wicked","year": "2024","rating": "7.6"},{"id": "tt31186958","title": "24. Prime Target","year": "2025\u2013 ","rating": "6.4"},{"id": "tt8008948","title": "25. Nella tana dei lupi 2 - Pantera","year": "2025","rating": "6.4"}]"""
 
     if qid == "ga4q3":
-        return "http://127.0.0.1:8000/api/outline"
+        return "https://wikipedia-outline.vercel.app/api/outline"
 
     if qid == "ga4q4":
         try:
@@ -563,22 +351,7 @@ def most_similar(embeddings):
             result = ga4.q4(city_name)
             return result
         except:
-            return """{
-        "2025-02-08": "A clear sky and light winds",
-        "2025-02-09": "Sunny intervals and light winds",
-        "2025-02-10": "Sunny intervals and a gentle breeze",
-        "2025-02-11": "Sunny intervals and a gentle breeze",
-        "2025-02-12": "Drizzle and light winds",
-        "2025-02-13": "Drizzle and a gentle breeze",
-        "2025-02-14": "Sunny intervals and a gentle breeze",
-        "2025-02-15": "Sunny intervals and a gentle breeze",
-        "2025-02-16": "Light rain and light winds",
-        "2025-02-17": "Light rain showers and a gentle breeze",
-        "2025-02-18": "Light cloud and a moderate breeze",
-        "2025-02-19": "Light cloud and a gentle breeze",
-        "2025-02-20": "Light cloud and a gentle breeze",
-        "2025-02-21": "Sleet showers and light winds"
-    }"""
+            return """{"2025-02-08": "A clear sky and light winds","2025-02-09": "Sunny intervals and light winds","2025-02-10": "Sunny intervals and a gentle breeze","2025-02-11": "Sunny intervals and a gentle breeze","2025-02-12": "Drizzle and light winds","2025-02-13": "Drizzle and a gentle breeze","2025-02-14": "Sunny intervals and a gentle breeze","2025-02-15": "Sunny intervals and a gentle breeze","2025-02-16": "Light rain and light winds","2025-02-17": "Light rain showers and a gentle breeze","2025-02-18": "Light cloud and a moderate breeze","2025-02-19": "Light cloud and a gentle breeze","2025-02-20": "Light cloud and a gentle breeze","2025-02-21": "Sleet showers and light winds"}"""
 
     if qid == "ga4q5":
         instruction="Read the question below carefully and return just the city name and the country name in the following format: '<city>, <country>'"
@@ -699,19 +472,7 @@ Sumo cogo clibanus cuppedia alii.
 
     if qid == "ga5q8":
         return """
-SELECT smo.post_id
-FROM social_media as smo
-WHERE smo.timestamp > '2024-11-15T06:02:28.656Z'
-AND EXISTS (
-SELECT 1
-FROM LATERAL (
-SELECT UNNEST(json_extract(comments, '$[*]'))
-FROM social_media as sm
-WHERE sm.post_id = smo.post_id
-) AS c(value)
-WHERE json_extract(c.value, '$.stars.useful')::DOUBLE = 4.0)
-order by smo.post_id;
-"""
+SELECT smo.post_id FROM social_media as smo WHERE smo.timestamp > '2024-11-15T06:02:28.656Z' AND EXISTS (SELECT 1 FROM LATERAL (SELECT UNNEST(json_extract(comments, '$[*]')) FROM social_media as sm WHERE sm.post_id = smo.post_id) AS c(value) WHERE json_extract(c.value, '$.stars.useful')::DOUBLE = 4.0) order by smo.post_id;"""
 
     if qid == "ga5q9":
         return """truth that could upend reputations and ignite fresh scandal.
