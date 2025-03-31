@@ -3,7 +3,7 @@ import httpx
 
 def ask_gpt(instruction, question):
     """Send a minimal request to OpenAI GPT-4o Mini."""
-    headers = {"Authorization": f"Bearer {os.environ.get("AIPROXY_TOKEN")}", "Content-Type": "application/json"}
+    headers = {"Authorization": f"Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjIxZjEwMDQ5MTNAZHMuc3R1ZHkuaWl0bS5hYy5pbiJ9.nbT1BzKJ4xz_LZM8jo4l_6957hbgC8cNHQHp0vLuZFc", "Content-Type": "application/json"}
     payload = {"model": "gpt-4o-mini", "messages": [{"role": "system", "content": instruction}, {"role": "user", "content": question}], "temperature": 0}
     
     try:
