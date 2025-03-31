@@ -2,6 +2,7 @@ import base64
 import datetime
 import json
 import re
+import asyncio
 
 import numpy as np
 
@@ -65,7 +66,7 @@ CPU %   Mem MB     PID  Process
 
     if qid == "ga1q4":
         instruction="Read the question below carefully and extract the Google sheet formula arguments. Return the arguments in a json format: {'sequence_args': <list of 4 args>, 'array_constrain_2': <2nd last arg of array constrain>, 'array_constrain_3': <last arg of array constrain>}. Return these outputs in a json format. Do not provide any other text as output. The json would be passed to python's json.loads function."
-        params_str = ask_gpt(instruction, question)
+        params_str = asyncio.run(ask_gpt(instruction, question))
         params = json.loads(params_str)
 
         rows = int(params["sequence_args"][0])
@@ -86,7 +87,7 @@ CPU %   Mem MB     PID  Process
 
     if qid == "ga1q5":
         instruction="Read the question below carefully and extract the Excel formula arguments. Return the arguments in a json format: {'array_1': <1st array passed to SORTBY as a python list>, 'array_2': <2nd array passed to SORTBY as a python list>, 'take_2': <2nd last arg of TAKE>, 'take_3': <last arg of TAKE>}. Return these outputs in a json format. Do not provide any other text as output. The json would be passed to python's json.loads function."
-        params_str = ask_gpt(instruction, question)
+        params_str = asyncio.run(ask_gpt(instruction, question))
 
         params = json.loads(params_str)
         data = np.array(params["array_1"])
@@ -108,7 +109,7 @@ CPU %   Mem MB     PID  Process
 
     if qid == "ga1q7":
         instruction="Read the question carefully and extract the date range in the following format: <start_date>,<end_date>. Do NOT return any other text."
-        result = ask_gpt(instruction, question)
+        result = asyncio.run(ask_gpt(instruction, question))
         dates = result.split(",")
         start = datetime.datetime.strptime(dates[0], "%Y-%m-%d").date()
         end = datetime.datetime.strptime(dates[1], "%Y-%m-%d").date()
@@ -122,7 +123,7 @@ CPU %   Mem MB     PID  Process
 
     if qid == "ga1q9":
         instruction="In the question that would be provided to you, please return the json that is mentioned there in a proper json format that would be read by python's json library. Please do not output any other text."
-        json_txt = ask_gpt(instruction, question)
+        json_txt = asyncio.run(ask_gpt(instruction, question))
         result = ga1.q9(json_str=json_txt)
         return result
 
@@ -146,7 +147,7 @@ CPU %   Mem MB     PID  Process
 
     if qid == "ga1q15":
         instruction="In the below question, please extract the number of bytes and the timestamp(in ISO format) and return it in a structured json with 2 keys: 'bytes' and 'timestamp'. Your output will be passed to python's json.loads() function so DO NOT output any other text. Output only the json"
-        filters = ask_gpt(instruction, question)
+        filters = asyncio.run(ask_gpt(instruction, question))
         result = ga1.q15(file, filters)
         return result
 
@@ -160,7 +161,7 @@ CPU %   Mem MB     PID  Process
 
     if qid == "ga1q18":
         instruction="In the given sql question, extract which type of ticket is the question asking to query. Return just the ticket type name as the output."
-        ticket_type = ask_gpt(instruction, question)
+        ticket_type = asyncio.run(ask_gpt(instruction, question))
         return f"SELECT SUM(total_sales) FROM (SELECT (units * price) AS total_sales FROM tickets WHERE LOWER(TRIM(type))='{ticket_type}');"
 
     if qid == "ga2q1":
@@ -223,7 +224,7 @@ print(f"Average steps per day: {average_steps}")
 
     if qid == "ga2q5":
         instruction="In the question provided below, there is a code snippet that counts the number of pixel with a certain minimum brightness. Return the brightness threshold as the only output. DO NOT return any other text."
-        brightness = ask_gpt(instruction, question)
+        brightness = asyncio.run(ask_gpt(instruction, question))
         result = ga2.q5(file, float(brightness))
         return result
 
@@ -246,7 +247,7 @@ print(f"Average steps per day: {average_steps}")
 
     if qid == "ga3q1":
         instruction = "In the question that would be provided, we have to analyse the the sentiment of a meaningless text. Read the question and extract the text to be analyzed and return just that as output."
-        snt_txt = ask_gpt(instruction, question)
+        snt_txt = asyncio.run(ask_gpt(instruction, question))
         code_str = [
             "import httpx",
             "import json",
@@ -330,10 +331,10 @@ def most_similar(embeddings):
 
     if qid == "ga4q1":
         instruction="Read the provided question carefully and extract the page number that they are asking to check and return it as the only output."
-        page_num = ask_gpt(instruction, question)
+        page_num = asyncio.run(ask_gpt(instruction, question))
         instruction2 = f"Go to https://stats.espncricinfo.com/stats/engine/stats/index.html?class=2;page={page_num};template=results;type=batting and get the total numbers of ducks(zero runs) across players. Return that as your only output."
         try:
-            result = int(ask_gpt("Follow the below instruction", instruction2))
+            result = int(asyncio.run(ask_gpt("Follow the below instruction", instruction2)))
             return result
         except:
             return 140
@@ -347,7 +348,7 @@ def most_similar(embeddings):
     if qid == "ga4q4":
         try:
             instruction="Read the question carefully and return just the city name for which weather information is being asked."
-            city_name = ask_gpt(instruction, question)
+            city_name = asyncio.run(ask_gpt(instruction, question))
             result = ga4.q4(city_name)
             return result
         except:
@@ -355,7 +356,7 @@ def most_similar(embeddings):
 
     if qid == "ga4q5":
         instruction="Read the question below carefully and return just the city name and the country name in the following format: '<city>, <country>'"
-        loc = ask_gpt(instruction, question)
+        loc = asyncio.run(ask_gpt(instruction, question))
         result = ga4.q5(loc)
         return result
 
@@ -369,7 +370,7 @@ def most_similar(embeddings):
         return "https://github.com/freshbash/github-scheduled-action"
 
     if qid == "ga4q9":
-        filter_str = ask_gpt(instructions.q9, question)
+        filter_str = asyncio.run(ask_gpt(instructions.q9, question))
         filter_obj = json.loads(filter_str)
         result = ga4.q9(filter_obj["subject"], filter_obj["filter_subject"], filter_obj["filter_score"], filter_obj["group"], file)
         return result

@@ -9,8 +9,6 @@ import json
 import datetime
 import re
 
-from llm import ask_gpt
-
 
 def q3(file):
     """Formats a markdown file using Prettier and returns its SHA-256 checksum."""
