@@ -1,3 +1,4 @@
+import asyncio
 from flask import Flask, request, jsonify
 
 from parse_question import query_openai
@@ -13,7 +14,7 @@ def solve_assignment():
     if not question:
         return jsonify({"error": "Question is required"}), 400
     
-    qid=query_openai(question)
+    qid=asyncio.run(query_openai(question))
 
     print(qid)
 
